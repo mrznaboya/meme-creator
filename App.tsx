@@ -24,19 +24,39 @@ import HomeScreen from "./components/HomeScreen";
 
 const Drawer = createDrawerNavigator();
 
+const getIcon = (screenName: string) => {
+  switch (screenName) {
+    case "Home":
+      return "home";
+    case "About":
+      return "information";
+    case "Creator":
+      return "fire";
+    default:
+      return undefined;
+  }
+};
+
 export const CustomDrawerContent = (props: any) => {
   return (
     <DrawerContentScrollView {...props}>
-      <VStack>
+      <VStack my={2} mx={1} space="2xl">
         {props.state.routeNames.map((name: string, index: number) => (
-          <Pressable onPress={(event) => props.navigation.navigate(name)}>
-            <HStack>
+          <Pressable
+            key={index}
+            px={5}
+            rounded="$md"
+            onPress={(event) => props.navigation.navigate(name)}
+            bg={index === props.state.index ? "$rose100" : "transparent"}
+          >
+            <HStack p={2} space="4xl" alignItems="center">
               <Icon
-                size="lg"
                 color={
                   index === props.state.index ? "$rose600" : "$blueGray700"
                 }
-                as={<MaterialCommunityIcons name="home" />}
+                as={() => (
+                  <MaterialCommunityIcons name={getIcon(name)} size={20} />
+                )}
               ></Icon>
               <Text
                 fontWeight="$medium"
