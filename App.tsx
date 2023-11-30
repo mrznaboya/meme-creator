@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/drawer";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CreatorScreen from "./components/CreatorScreen";
@@ -22,6 +22,7 @@ import {
   VStack,
   theme,
 } from "native-base";
+import { LogBox } from "react-native";
 const Drawer = createDrawerNavigator();
 const getIcon = (screenName: string) => {
   switch (screenName) {
@@ -75,6 +76,7 @@ export const CustomDrawerContent = (props: any) => {
     </DrawerContentScrollView>
   );
 };
+
 export default function App() {
   const headerStyle = {
     headerStyle: {
@@ -82,6 +84,13 @@ export default function App() {
     },
     headerTintColor: "#FFF",
   };
+
+  useEffect(() => {
+    LogBox.ignoreLogs([
+      "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
+    ]);
+  }, []);
+
   return (
     <NativeBaseProvider>
       <SafeAreaProvider>
