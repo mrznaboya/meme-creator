@@ -1,5 +1,4 @@
 import "react-native-gesture-handler";
-
 import {
   DrawerContentScrollView,
   createDrawerNavigator,
@@ -8,8 +7,10 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import {
+  Center,
   GluestackUIProvider,
   HStack,
+  Heading,
   Icon,
   Pressable,
   Text,
@@ -17,13 +18,10 @@ import {
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import CreatorScreen from "./components/CreatorScreen";
 import AboutScreen from "./components/AboutScreen";
 import HomeScreen from "./components/HomeScreen";
-
 const Drawer = createDrawerNavigator();
-
 const getIcon = (screenName: string) => {
   switch (screenName) {
     case "Home":
@@ -36,28 +34,36 @@ const getIcon = (screenName: string) => {
       return undefined;
   }
 };
-
 export const CustomDrawerContent = (props: any) => {
   return (
     <DrawerContentScrollView {...props}>
-      <VStack my={2} mx={1} space="2xl">
+      <Center>
+        <Heading color={"$rose500"}>Menu</Heading>
+      </Center>
+      <VStack my={2} mx={1} space="lg">
         {props.state.routeNames.map((name: string, index: number) => (
           <Pressable
             key={index}
-            px={5}
+            px={30}
+            py={15}
             rounded="$md"
             onPress={(event) => props.navigation.navigate(name)}
             bg={index === props.state.index ? "$rose100" : "transparent"}
           >
-            <HStack p={2} space="4xl" alignItems="center">
+            <HStack p={1} space="2xl" alignItems="center">
               <Icon
                 color={
                   index === props.state.index ? "$rose600" : "$blueGray700"
                 }
-                as={() => (
-                  <MaterialCommunityIcons name={getIcon(name)} size={20} />
+                as={({ color }: any) => (
+                  <MaterialCommunityIcons
+                    name={getIcon(name)}
+                    size={20}
+                    color={color}
+                  />
                 )}
-              ></Icon>
+              />
+
               <Text
                 fontWeight="$medium"
                 color={
@@ -73,7 +79,6 @@ export const CustomDrawerContent = (props: any) => {
     </DrawerContentScrollView>
   );
 };
-
 export default function App() {
   const headerStyle = {
     headerStyle: {
