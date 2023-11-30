@@ -6,21 +6,22 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import {
-  Center,
-  GluestackUIProvider,
-  HStack,
-  Heading,
-  Icon,
-  Pressable,
-  Text,
-  VStack,
-} from "@gluestack-ui/themed";
-import { config } from "@gluestack-ui/config";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CreatorScreen from "./components/CreatorScreen";
 import AboutScreen from "./components/AboutScreen";
 import HomeScreen from "./components/HomeScreen";
+import {
+  Center,
+  HStack,
+  Heading,
+  Icon,
+  NativeBaseProvider,
+  Pressable,
+  Text,
+  VStack,
+  theme,
+} from "native-base";
 const Drawer = createDrawerNavigator();
 const getIcon = (screenName: string) => {
   switch (screenName) {
@@ -38,36 +39,31 @@ export const CustomDrawerContent = (props: any) => {
   return (
     <DrawerContentScrollView {...props}>
       <Center>
-        <Heading color={"$rose500"}>Menu</Heading>
+        <Heading color={"secondary.500"}>Menu</Heading>
       </Center>
-      <VStack my={2} mx={1} space="lg">
+      <VStack my={2} mx={1} space={3}>
         {props.state.routeNames.map((name: string, index: number) => (
           <Pressable
             key={index}
-            px={30}
-            py={15}
-            rounded="$md"
+            px={5}
+            py={3}
+            rounded="md"
             onPress={(event) => props.navigation.navigate(name)}
-            bg={index === props.state.index ? "$rose100" : "transparent"}
+            bg={index === props.state.index ? "secondary.100" : "transparent"}
           >
-            <HStack p={1} space="2xl" alignItems="center">
+            <HStack p={1} space={4} alignItems="center">
               <Icon
+                size={5}
                 color={
-                  index === props.state.index ? "$rose600" : "$blueGray700"
+                  index === props.state.index ? "secondary.600" : "gray.700"
                 }
-                as={({ color }: any) => (
-                  <MaterialCommunityIcons
-                    name={getIcon(name)}
-                    size={20}
-                    color={color}
-                  />
-                )}
+                as={<MaterialCommunityIcons name={getIcon(name)} />}
               />
 
               <Text
-                fontWeight="$medium"
+                fontWeight={500}
                 color={
-                  index === props.state.index ? "$rose600" : "$blueGray700"
+                  index === props.state.index ? "secondary.600" : "gray.700"
                 }
               >
                 {name}
@@ -82,12 +78,12 @@ export const CustomDrawerContent = (props: any) => {
 export default function App() {
   const headerStyle = {
     headerStyle: {
-      backgroundColor: config.tokens.colors.rose600,
+      backgroundColor: theme.colors.secondary[600],
     },
     headerTintColor: "#FFF",
   };
   return (
-    <GluestackUIProvider config={config}>
+    <NativeBaseProvider>
       <SafeAreaProvider>
         <NavigationContainer>
           <Drawer.Navigator
@@ -121,6 +117,6 @@ export default function App() {
           </Drawer.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
-    </GluestackUIProvider>
+    </NativeBaseProvider>
   );
 }

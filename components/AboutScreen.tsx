@@ -1,7 +1,6 @@
 import { View } from "react-native";
 import React from "react";
-import { Center } from "@gluestack-ui/themed";
-import { Heading } from "@gluestack-ui/themed";
+import { Center, Heading } from "native-base";
 
 const AboutScreen = () => {
   return (
